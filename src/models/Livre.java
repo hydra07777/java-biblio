@@ -5,10 +5,12 @@
 package models;
 
 /**
- *
+ * Modèle représentant un livre de la bibliothèque
+ * Hérite de BaseModel et implémente Identifiable (utilise ISBN comme identifiant)
+ * 
  * @author CAESAR
  */
-public class Livre {
+public class Livre extends BaseModel implements Identifiable {
     private String isbn;
     private String titre;
     private String auteur;
@@ -54,6 +56,34 @@ public class Livre {
 
     public void setQuantite(int quantite) {
         this.quantite = quantite;
+    }
+
+    @Override
+    public boolean isValid() {
+        return isNotEmpty(isbn) && 
+               isNotEmpty(titre) && 
+               isNotEmpty(auteur) && 
+               isPositiveOrZero(quantite);
+    }
+
+    @Override
+    public String getIdentifier() {
+        return isbn;
+    }
+
+    @Override
+    public boolean hasIdentifier() {
+        return isNotEmpty(isbn);
+    }
+
+    @Override
+    public String toString() {
+        return "Livre{" +
+               "isbn='" + isbn + '\'' +
+               ", titre='" + titre + '\'' +
+               ", auteur='" + auteur + '\'' +
+               ", quantite=" + quantite +
+               '}';
     }
 }
 

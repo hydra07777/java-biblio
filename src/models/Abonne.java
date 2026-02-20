@@ -5,20 +5,23 @@
 package models;
 
 /**
- *
+ * Modèle représentant un abonné de la bibliothèque
+ * Hérite de BaseEntity pour la gestion de l'ID
+ * 
  * @author CAESAR
  */
-public class Abonne {
-    private int id;
+public class Abonne extends BaseEntity {
     private String nom;
     private String prenom;
     private String email;
     private String telephone;
 
     public Abonne() {
+        super();
     }
 
     public Abonne(String nom, String prenom, String email, String telephone) {
+        super();
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
@@ -26,19 +29,11 @@ public class Abonne {
     }
 
     public Abonne(int id, String nom, String prenom, String email, String telephone) {
-        this.id = id;
+        super(id);
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.telephone = telephone;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNom() {
@@ -71,6 +66,25 @@ public class Abonne {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    @Override
+    public boolean isValid() {
+        return super.isValid() && 
+               isNotEmpty(nom) && 
+               isNotEmpty(prenom) && 
+               isNotEmpty(email);
+    }
+
+    @Override
+    public String toString() {
+        return "Abonne{" +
+               "id=" + id +
+               ", nom='" + nom + '\'' +
+               ", prenom='" + prenom + '\'' +
+               ", email='" + email + '\'' +
+               ", telephone='" + telephone + '\'' +
+               '}';
     }
 }
 

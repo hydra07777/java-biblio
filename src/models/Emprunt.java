@@ -4,14 +4,15 @@
  */
 package models;
 
-/**
- *
- * @author CAESAR
- */
 import java.util.Date;
 
-public class Emprunt {
-    private int id;
+/**
+ * Modèle représentant un emprunt de livre
+ * Hérite de BaseEntity pour la gestion de l'ID
+ * 
+ * @author CAESAR
+ */
+public class Emprunt extends BaseEntity {
     private int idLivre;
     private int idAbonne;
     private Date dateEmprunt;
@@ -19,9 +20,11 @@ public class Emprunt {
     private String statut; // "EN_COURS", "RETOURNE", "RETARDE"
 
     public Emprunt() {
+        super();
     }
 
     public Emprunt(int idLivre, int idAbonne, Date dateEmprunt, Date dateRetour, String statut) {
+        super();
         this.idLivre = idLivre;
         this.idAbonne = idAbonne;
         this.dateEmprunt = dateEmprunt;
@@ -30,20 +33,12 @@ public class Emprunt {
     }
 
     public Emprunt(int id, int idLivre, int idAbonne, Date dateEmprunt, Date dateRetour, String statut) {
-        this.id = id;
+        super(id);
         this.idLivre = idLivre;
         this.idAbonne = idAbonne;
         this.dateEmprunt = dateEmprunt;
         this.dateRetour = dateRetour;
         this.statut = statut;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getIdLivre() {
@@ -84,6 +79,27 @@ public class Emprunt {
 
     public void setStatut(String statut) {
         this.statut = statut;
+    }
+
+    @Override
+    public boolean isValid() {
+        return super.isValid() && 
+               isPositive(idLivre) && 
+               isPositive(idAbonne) && 
+               dateEmprunt != null &&
+               (statut != null && (statut.equals("EN_COURS") || statut.equals("RETOURNE") || statut.equals("RETARDE")));
+    }
+
+    @Override
+    public String toString() {
+        return "Emprunt{" +
+               "id=" + id +
+               ", idLivre=" + idLivre +
+               ", idAbonne=" + idAbonne +
+               ", dateEmprunt=" + dateEmprunt +
+               ", dateRetour=" + dateRetour +
+               ", statut='" + statut + '\'' +
+               '}';
     }
 }
 
