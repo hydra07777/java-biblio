@@ -9,11 +9,129 @@
  */
 public class GestionAbonneFrame extends javax.swing.JFrame {
 
+    // Color constants for the theme
+    private static final java.awt.Color BG_NIGHT = new java.awt.Color(10, 25, 47);        // #0A192F
+    private static final java.awt.Color BG_MEDIUM = new java.awt.Color(17, 34, 64);       // #112240
+    private static final java.awt.Color CYAN_ACCENT = new java.awt.Color(100, 255, 218); // #64FFDA
+    private static final java.awt.Color GRAY_LIGHT = new java.awt.Color(204, 214, 246); // #CCD6F6
+
     /**
      * Creates new form GestionAbonneFrame
      */
     public GestionAbonneFrame() {
         initComponents();
+        applyTheme();
+    }
+
+    private void applyTheme() {
+        getContentPane().setBackground(BG_NIGHT);
+        
+        // Title
+        jLabel1.setForeground(CYAN_ACCENT);
+        jLabel1.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 20));
+        
+        // Labels
+        java.awt.Font labelFont = new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14);
+        jLabel2.setForeground(GRAY_LIGHT);
+        jLabel2.setFont(labelFont);
+        jLabel3.setForeground(GRAY_LIGHT);
+        jLabel3.setFont(labelFont);
+        jLabel4.setForeground(GRAY_LIGHT);
+        jLabel4.setFont(labelFont);
+        jLabel5.setForeground(GRAY_LIGHT);
+        jLabel5.setFont(labelFont);
+        jLabel6.setForeground(GRAY_LIGHT);
+        jLabel6.setFont(labelFont);
+        
+        // Text fields
+        txtId.setBackground(BG_MEDIUM);
+        txtId.setForeground(GRAY_LIGHT);
+        txtId.setCaretColor(GRAY_LIGHT);
+        txtId.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        
+        txtNom.setBackground(BG_MEDIUM);
+        txtNom.setForeground(GRAY_LIGHT);
+        txtNom.setCaretColor(GRAY_LIGHT);
+        txtNom.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        
+        txtPrenom.setBackground(BG_MEDIUM);
+        txtPrenom.setForeground(GRAY_LIGHT);
+        txtPrenom.setCaretColor(GRAY_LIGHT);
+        txtPrenom.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        
+        txtEmail.setBackground(BG_MEDIUM);
+        txtEmail.setForeground(GRAY_LIGHT);
+        txtEmail.setCaretColor(GRAY_LIGHT);
+        txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        
+        txtTelephone.setBackground(BG_MEDIUM);
+        txtTelephone.setForeground(GRAY_LIGHT);
+        txtTelephone.setCaretColor(GRAY_LIGHT);
+        txtTelephone.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        
+        // Table
+        jTable1.setBackground(BG_MEDIUM);
+        jTable1.setForeground(GRAY_LIGHT);
+        jTable1.setGridColor(BG_NIGHT);
+        jTable1.setSelectionBackground(CYAN_ACCENT);
+        jTable1.setSelectionForeground(BG_NIGHT);
+        jTable1.setRowHeight(25);
+        
+        // Table header
+        jScrollPane1.getColumnHeader().setBackground(BG_NIGHT);
+        jScrollPane1.getColumnHeader().setForeground(CYAN_ACCENT);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        jScrollPane1.getViewport().setBackground(BG_MEDIUM);
+        
+        // Buttons
+        java.awt.Font btnFontBold = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13);
+        
+        btnAjouter.setBackground(CYAN_ACCENT);
+        btnAjouter.setForeground(BG_NIGHT);
+        btnAjouter.setFont(btnFontBold);
+        btnAjouter.setBorderPainted(false);
+        
+        btnModifier.setBackground(CYAN_ACCENT);
+        btnModifier.setForeground(BG_NIGHT);
+        btnModifier.setFont(btnFontBold);
+        btnModifier.setBorderPainted(false);
+        
+        btnSupprimer.setBackground(CYAN_ACCENT);
+        btnSupprimer.setForeground(BG_NIGHT);
+        btnSupprimer.setFont(btnFontBold);
+        btnSupprimer.setBorderPainted(false);
+        
+        btnRechercher.setBackground(CYAN_ACCENT);
+        btnRechercher.setForeground(BG_NIGHT);
+        btnRechercher.setFont(btnFontBold);
+        btnRechercher.setBorderPainted(false);
+        
+        btnActualiser.setBackground(CYAN_ACCENT);
+        btnActualiser.setForeground(BG_NIGHT);
+        btnActualiser.setFont(btnFontBold);
+        btnActualiser.setBorderPainted(false);
+        
+        // Hover effects
+        addHoverEffect(btnAjouter);
+        addHoverEffect(btnModifier);
+        addHoverEffect(btnSupprimer);
+        addHoverEffect(btnRechercher);
+        addHoverEffect(btnActualiser);
+    }
+    
+    private void addHoverEffect(javax.swing.JButton btn) {
+        btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn.setBackground(BG_MEDIUM);
+                btn.setForeground(CYAN_ACCENT);
+                btn.setBorderPainted(true);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn.setBackground(CYAN_ACCENT);
+                btn.setForeground(BG_NIGHT);
+                btn.setBorderPainted(false);
+            }
+        });
     }
 
     /**

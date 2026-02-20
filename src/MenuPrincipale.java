@@ -9,11 +9,78 @@
  */
 public class MenuPrincipale extends javax.swing.JFrame {
 
+    // Color constants for the theme
+    private static final java.awt.Color BG_NIGHT = new java.awt.Color(10, 25, 47);        // #0A192F
+    private static final java.awt.Color BG_MEDIUM = new java.awt.Color(17, 34, 64);       // #112240
+    private static final java.awt.Color CYAN_ACCENT = new java.awt.Color(100, 255, 218); // #64FFDA
+    private static final java.awt.Color GRAY_LIGHT = new java.awt.Color(204, 214, 246); // #CCD6F6
+
     /**
      * Creates new form MenuPrincipale
      */
     public MenuPrincipale() {
         initComponents();
+        applyTheme();
+    }
+
+    private void applyTheme() {
+        getContentPane().setBackground(BG_NIGHT);
+        
+        // Title label
+        jLabel1.setForeground(CYAN_ACCENT);
+        jLabel1.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 24));
+        
+        // Panel
+        jPanel1.setBackground(BG_MEDIUM);
+        
+        // Buttons
+        java.awt.Font btnFont = new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14);
+        java.awt.Font btnFontBold = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14);
+        
+        jButton1.setBackground(BG_MEDIUM);
+        jButton1.setForeground(CYAN_ACCENT);
+        jButton1.setFont(btnFontBold);
+        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(CYAN_ACCENT, 2));
+        
+        jButton2.setBackground(BG_MEDIUM);
+        jButton2.setForeground(CYAN_ACCENT);
+        jButton2.setFont(btnFontBold);
+        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(CYAN_ACCENT, 2));
+        
+        jButton3.setBackground(BG_MEDIUM);
+        jButton3.setForeground(CYAN_ACCENT);
+        jButton3.setFont(btnFontBold);
+        jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(CYAN_ACCENT, 2));
+        
+        jButton4.setBackground(BG_MEDIUM);
+        jButton4.setForeground(CYAN_ACCENT);
+        jButton4.setFont(btnFontBold);
+        jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(CYAN_ACCENT, 2));
+        
+        jButton5.setBackground(BG_MEDIUM);
+        jButton5.setForeground(CYAN_ACCENT);
+        jButton5.setFont(btnFontBold);
+        jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(CYAN_ACCENT, 2));
+        
+        // Hover effects
+        addHoverEffect(jButton1);
+        addHoverEffect(jButton2);
+        addHoverEffect(jButton3);
+        addHoverEffect(jButton4);
+        addHoverEffect(jButton5);
+    }
+    
+    private void addHoverEffect(javax.swing.JButton btn) {
+        btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn.setBackground(CYAN_ACCENT);
+                btn.setForeground(BG_NIGHT);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn.setBackground(BG_MEDIUM);
+                btn.setForeground(CYAN_ACCENT);
+            }
+        });
     }
 
     /**
