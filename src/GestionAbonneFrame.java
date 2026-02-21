@@ -15,11 +15,140 @@ import models.Abonne;
  */
 public class GestionAbonneFrame extends javax.swing.JFrame {
 
+    private AbonneDao abonneDao;
+
     /**
      * Creates new form GestionAbonneFrame
      */
     public GestionAbonneFrame() {
         initComponents();
+        abonneDao = new AbonneDao();
+        actualiserTable();
+        initListeners();
+    }
+
+    private void initListeners() {
+        btnModifier.addActionListener(e -> modifierAbonne());
+        btnSupprimer.addActionListener(e -> supprimerAbonne());
+        btnRechercher.addActionListener(e -> rechercherAbonne());
+        btnActualiser.addActionListener(e -> {
+            viderFormulaire();
+            actualiserTable();
+        });
+        jTable1.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && jTable1.getSelectedRow() >= 0) {
+                remplirFormulaireDepuisLigne(jTable1.getSelectedRow());
+            }
+        });
+    }
+
+    private void actualiserTable() {
+        List<Abonne> abonnes = abonneDao.listerTous();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        for (Abonne a : abonnes) {
+            model.addRow(new Object[]{a.getId(), a.getNom(), a.getPrenom(), a.getEmail(), a.getTelephone()});
+        }
+    }
+
+    private void remplirFormulaireDepuisLigne(int row) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        txtId.setText(String.valueOf(model.getValueAt(row, 0)));
+        txtNom.setText(String.valueOf(model.getValueAt(row, 1)));
+        txtPrenom.setText(String.valueOf(model.getValueAt(row, 2)));
+        txtEmail.setText(String.valueOf(model.getValueAt(row, 3)));
+        txtTelephone.setText(String.valueOf(model.getValueAt(row, 4)));
+    }
+
+    private void viderFormulaire() {
+        txtId.setText("");
+        txtNom.setText("");
+        txtPrenom.setText("");
+        txtEmail.setText("");
+        txtTelephone.setText("");
+    }
+
+    private boolean validerFormulaire() {
+        if (txtNom.getText().trim().isEmpty()
+                || txtPrenom.getText().trim().isEmpty()
+                || txtEmail.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Veuillez remplir au moins Nom, Prénom et Email !");
+            return false;
+        }
+        return true;
+    }
+
+    private void modifierAbonne() {
+        String idStr = txtId.getText().trim();
+        if (idStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sélectionnez un abonné dans le tableau ou saisissez son ID.");
+            return;
+        }
+        if (!validerFormulaire()) {
+            return;
+        }
+        try {
+            int id = Integer.parseInt(idStr);
+            Abonne abonne = new Abonne(id,
+                    txtNom.getText().trim(),
+                    txtPrenom.getText().trim(),
+                    txtEmail.getText().trim(),
+                    txtTelephone.getText().trim());
+            abonneDao.modifierAbonne(abonne);
+            JOptionPane.showMessageDialog(this, "Abonné modifié avec succès !");
+            viderFormulaire();
+            actualiserTable();
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "ID invalide.");
+        }
+    }
+
+    private void supprimerAbonne() {
+        String idStr = txtId.getText().trim();
+        if (idStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sélectionnez un abonné dans le tableau ou saisissez son ID.");
+            return;
+        }
+        try {
+            int id = Integer.parseInt(idStr);
+            int rep = JOptionPane.showConfirmDialog(this,
+                    "Supprimer l'abonné ID " + id + " ?",
+                    "Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+            if (rep == JOptionPane.YES_OPTION) {
+                abonneDao.supprimerAbonne(id);
+                JOptionPane.showMessageDialog(this, "Abonné supprimé avec succès !");
+                viderFormulaire();
+                actualiserTable();
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "ID invalide.");
+        }
+    }
+
+    private void rechercherAbonne() {
+        String idStr = JOptionPane.showInputDialog(this,
+                "Entrez l'ID de l'abonné :",
+                "Recherche",
+                JOptionPane.QUESTION_MESSAGE);
+        if (idStr == null) {
+            return;
+        }
+        try {
+            int id = Integer.parseInt(idStr.trim());
+            Abonne abonne = abonneDao.trouverParId(id);
+            if (abonne != null) {
+                txtId.setText(String.valueOf(abonne.getId()));
+                txtNom.setText(abonne.getNom());
+                txtPrenom.setText(abonne.getPrenom());
+                txtEmail.setText(abonne.getEmail());
+                txtTelephone.setText(abonne.getTelephone());
+            } else {
+                JOptionPane.showMessageDialog(this, "Aucun abonné trouvé avec l'ID " + id);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Veuillez saisir un ID numérique valide.");
+        }
     }
 
     /**
