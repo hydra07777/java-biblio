@@ -15,19 +15,156 @@ import models.Abonne;
  */
 public class GestionAbonneFrame extends javax.swing.JFrame {
 
+    // Color constants for the theme (same as GestionLivresFrame)
+    private static final java.awt.Color BG_NIGHT = new java.awt.Color(10, 25, 47);
+    private static final java.awt.Color BG_MEDIUM = new java.awt.Color(17, 34, 64);
+    private static final java.awt.Color CYAN_ACCENT = new java.awt.Color(100, 255, 218);
+    private static final java.awt.Color GRAY_LIGHT = new java.awt.Color(204, 214, 246);
+
     private AbonneDao abonneDao;
 
     /**
      * Creates new form GestionAbonneFrame
      */
     public GestionAbonneFrame() {
-        initComponents();
-        abonneDao = new AbonneDao();
-        actualiserTable();
-        initListeners();
+        try {
+            initComponents();
+            abonneDao = new AbonneDao();
+            initListeners();
+            applyTheme();
+            actualiserTable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                "Erreur lors de l'initialisation: " + e.getMessage(),
+                "Erreur",
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+    
+    private void applyTheme() {
+        // Fond principal
+        getContentPane().setBackground(BG_NIGHT);
+        
+        // Titre
+        jLabel1.setForeground(CYAN_ACCENT);
+        jLabel1.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 20));
+        
+        // Labels - Texte en gris clair
+        java.awt.Font labelFont = new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14);
+        jLabel2.setForeground(GRAY_LIGHT);
+        jLabel2.setFont(labelFont);
+        jLabel3.setForeground(GRAY_LIGHT);
+        jLabel3.setFont(labelFont);
+        jLabel4.setForeground(GRAY_LIGHT);
+        jLabel4.setFont(labelFont);
+        jLabel5.setForeground(GRAY_LIGHT);
+        jLabel5.setFont(labelFont);
+        jLabel6.setForeground(GRAY_LIGHT);
+        jLabel6.setFont(labelFont);
+        
+        // TextFields - Theme sombre
+        java.awt.Font textFont = new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14);
+        txtId.setBackground(BG_MEDIUM);
+        txtId.setForeground(GRAY_LIGHT);
+        txtId.setFont(textFont);
+        txtId.setCaretColor(GRAY_LIGHT);
+        txtId.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        
+        txtNom.setBackground(BG_MEDIUM);
+        txtNom.setForeground(GRAY_LIGHT);
+        txtNom.setFont(textFont);
+        txtNom.setCaretColor(GRAY_LIGHT);
+        txtNom.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        
+        txtPrenom.setBackground(BG_MEDIUM);
+        txtPrenom.setForeground(GRAY_LIGHT);
+        txtPrenom.setFont(textFont);
+        txtPrenom.setCaretColor(GRAY_LIGHT);
+        txtPrenom.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        
+        txtEmail.setBackground(BG_MEDIUM);
+        txtEmail.setForeground(GRAY_LIGHT);
+        txtEmail.setFont(textFont);
+        txtEmail.setCaretColor(GRAY_LIGHT);
+        txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        
+        txtTelephone.setBackground(BG_MEDIUM);
+        txtTelephone.setForeground(GRAY_LIGHT);
+        txtTelephone.setFont(textFont);
+        txtTelephone.setCaretColor(GRAY_LIGHT);
+        txtTelephone.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        
+        // Panel
+
+        
+        // Buttons - Theme cyan (comme GestionLivresFrame)
+        java.awt.Font btnFontBold = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13);
+        
+        btnAjouter.setBackground(CYAN_ACCENT);
+        btnAjouter.setForeground(BG_NIGHT);
+        btnAjouter.setFont(btnFontBold);
+        btnAjouter.setBorderPainted(false);
+        
+        btnModifier.setBackground(CYAN_ACCENT);
+        btnModifier.setForeground(BG_NIGHT);
+        btnModifier.setFont(btnFontBold);
+        btnModifier.setBorderPainted(false);
+        
+        btnSupprimer.setBackground(CYAN_ACCENT);
+        btnSupprimer.setForeground(BG_NIGHT);
+        btnSupprimer.setFont(btnFontBold);
+        btnSupprimer.setBorderPainted(false);
+        
+        btnRechercher.setBackground(CYAN_ACCENT);
+        btnRechercher.setForeground(BG_NIGHT);
+        btnRechercher.setFont(btnFontBold);
+        btnRechercher.setBorderPainted(false);
+        
+        btnActualiser.setBackground(CYAN_ACCENT);
+        btnActualiser.setForeground(BG_NIGHT);
+        btnActualiser.setFont(btnFontBold);
+        btnActualiser.setBorderPainted(false);
+        
+        // Hover effects
+        addHoverEffect(btnAjouter);
+        addHoverEffect(btnModifier);
+        addHoverEffect(btnSupprimer);
+        addHoverEffect(btnRechercher);
+        addHoverEffect(btnActualiser);
+        
+        // Tableau (comme GestionLivresFrame)
+        jTable1.setBackground(BG_MEDIUM);
+        jTable1.setForeground(GRAY_LIGHT);
+        jTable1.setGridColor(BG_NIGHT);
+        jTable1.setSelectionBackground(CYAN_ACCENT);
+        jTable1.setSelectionForeground(BG_NIGHT);
+        jTable1.setRowHeight(25);
+        
+        // Table header
+        jScrollPane1.getColumnHeader().setBackground(BG_NIGHT);
+        jScrollPane1.getColumnHeader().setForeground(CYAN_ACCENT);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(BG_MEDIUM));
+        jScrollPane1.getViewport().setBackground(BG_MEDIUM);
+    }
+    
+    private void addHoverEffect(javax.swing.JButton btn) {
+        btn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn.setBackground(BG_MEDIUM);
+                btn.setForeground(CYAN_ACCENT);
+                btn.setBorderPainted(true);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn.setBackground(CYAN_ACCENT);
+                btn.setForeground(BG_NIGHT);
+                btn.setBorderPainted(false);
+            }
+        });
     }
 
     private void initListeners() {
+        btnAjouter.addActionListener(e -> ajouterAbonne());
         btnModifier.addActionListener(e -> modifierAbonne());
         btnSupprimer.addActionListener(e -> supprimerAbonne());
         btnRechercher.addActionListener(e -> rechercherAbonne());
@@ -43,11 +180,16 @@ public class GestionAbonneFrame extends javax.swing.JFrame {
     }
 
     private void actualiserTable() {
-        List<Abonne> abonnes = abonneDao.listerTous();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-        for (Abonne a : abonnes) {
-            model.addRow(new Object[]{a.getId(), a.getNom(), a.getPrenom(), a.getEmail(), a.getTelephone()});
+        try {
+            List<Abonne> abonnes = abonneDao.listerTous();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0);
+            for (Abonne a : abonnes) {
+                model.addRow(new Object[]{a.getId(), a.getNom(), a.getPrenom(), a.getEmail(), a.getTelephone()});
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Erreur lors du chargement: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -76,6 +218,21 @@ public class GestionAbonneFrame extends javax.swing.JFrame {
             return false;
         }
         return true;
+    }
+
+    private void ajouterAbonne() {
+        if (!validerFormulaire()) {
+            return;
+        }
+        Abonne abonne = new Abonne(
+                txtNom.getText().trim(),
+                txtPrenom.getText().trim(),
+                txtEmail.getText().trim(),
+                txtTelephone.getText().trim());
+        abonneDao.ajouterAbonne(abonne);
+        JOptionPane.showMessageDialog(this, "Abonné ajouté avec succès !");
+        viderFormulaire();
+        actualiserTable();
     }
 
     private void modifierAbonne() {
@@ -266,13 +423,13 @@ public class GestionAbonneFrame extends javax.swing.JFrame {
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTelephone, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
-                            .addComponent(txtPrenom, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
-                            .addComponent(txtId, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtNom, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE))
-                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtNom, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
+                            .addComponent(txtPrenom, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTelephone, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEmail)
+                            .addComponent(txtId))
+                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,18 +512,7 @@ public class GestionAbonneFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void btnAjouterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAjouterActionPerformed
-        if (!validerFormulaire()) {
-            return;
-        }
-        Abonne abonne = new Abonne(
-                txtNom.getText().trim(),
-                txtPrenom.getText().trim(),
-                txtEmail.getText().trim(),
-                txtTelephone.getText().trim());
-        abonneDao.ajouterAbonne(abonne);
-        JOptionPane.showMessageDialog(this, "Abonné ajouté avec succès !");
-        viderFormulaire();
-        actualiserTable();
+        ajouterAbonne();
     }//GEN-LAST:event_btnAjouterActionPerformed
 
     /**

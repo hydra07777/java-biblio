@@ -71,6 +71,7 @@ public class LivreDao {
 
             while (rs.next()) {
                 Livre livre = new Livre(
+                    rs.getInt("id"),
                     rs.getString("isbn"),
                     rs.getString("titre"),
                     rs.getString("auteur"),

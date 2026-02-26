@@ -6,25 +6,32 @@ package utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
-/**
- *
- * @author CAESAR
- */
 public class BDConnection {
 
-    private static String url = "jdbc:mysql://localhost:3306/bibliothequejava";
-    private static String user = "root";
-    private static String mdp = "root";
+    private static final String url = 
+        "jdbc:mysql://localhost:3306/bibliothequejava?useSSL=false&serverTimezone=UTC";
+
+    private static final String user = "root";
+    private static final String mdp = "";
+
     private static Connection conn = null;
 
     public static Connection getConnection() {
         try {
 
+            // Charger explicitement le driver (important)
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
             conn = DriverManager.getConnection(url, user, mdp);
 
-        } catch (Exception e) {
-            System.out.print("Erreur dan sla connection a la base de donnee : " + e);
+            System.out.println("Connexion réussie !");
+
+        } catch (ClassNotFoundException e) {
+            System.out.println("Driver MySQL non trouvé !");
+        } catch (SQLException e) {
+            System.out.println("Erreur connexion : " + e.getMessage());
         }
 
         return conn;

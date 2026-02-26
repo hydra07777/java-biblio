@@ -11,6 +11,7 @@ package models;
  * @author CAESAR
  */
 public class Livre extends BaseModel implements Identifiable {
+    private int id;
     private String isbn;
     private String titre;
     private String auteur;
@@ -19,11 +20,27 @@ public class Livre extends BaseModel implements Identifiable {
     public Livre() {
     }
 
+    public Livre(int id, String isbn, String titre, String auteur, int quantite) {
+        this.id = id;
+        this.isbn = isbn;
+        this.titre = titre;
+        this.auteur = auteur;
+        this.quantite = quantite;
+    }
+
     public Livre(String isbn, String titre, String auteur, int quantite) {
         this.isbn = isbn;
         this.titre = titre;
         this.auteur = auteur;
         this.quantite = quantite;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getIsbn() {

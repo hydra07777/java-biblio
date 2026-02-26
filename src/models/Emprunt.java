@@ -18,6 +18,11 @@ public class Emprunt extends BaseEntity {
     private Date dateEmprunt;
     private Date dateRetour;
     private String statut; // "EN_COURS", "RETOURNE", "RETARDE"
+    
+    // Champs pour l'affichage avec les noms
+    private String nomAbonne;
+    private String prenomAbonne;
+    private String titreLivre;
 
     public Emprunt() {
         super();
@@ -39,6 +44,31 @@ public class Emprunt extends BaseEntity {
         this.dateEmprunt = dateEmprunt;
         this.dateRetour = dateRetour;
         this.statut = statut;
+    }
+
+    // Getters et Setters pour les nouveaux champs
+    public String getNomAbonne() {
+        return nomAbonne;
+    }
+
+    public void setNomAbonne(String nomAbonne) {
+        this.nomAbonne = nomAbonne;
+    }
+
+    public String getPrenomAbonne() {
+        return prenomAbonne;
+    }
+
+    public void setPrenomAbonne(String prenomAbonne) {
+        this.prenomAbonne = prenomAbonne;
+    }
+
+    public String getTitreLivre() {
+        return titreLivre;
+    }
+
+    public void setTitreLivre(String titreLivre) {
+        this.titreLivre = titreLivre;
     }
 
     public int getIdLivre() {
